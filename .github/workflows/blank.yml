@@ -33,6 +33,9 @@ jobs:
       - name: Run a multi-line script
         run: |
           curl -sSLO https://github.com/zegl/kube-score/releases/download/v1.17.0/kube-score_1.17.0_linux_amd64
-          ls -lah
+          which curl
+          whuch chmod
+          chmod +x kube-score_1.17.0_linux_amd64
+          ./kube-score_1.17.0_linux_amd64 score *.yaml
           echo Add other actions to build,
           echo test, and deploy your project.
