@@ -30,8 +30,8 @@ jobs:
         run: |
           /usr/bin/curl -sSLO https://github.com/zegl/kube-score/releases/download/v1.17.0/kube-score_1.17.0_linux_amd64
           /usr/bin/chmod +x kube-score_1.17.0_linux_amd64
-          ./kube-score_1.17.0_linux_amd64 score *.yaml > kube-score-results-${GITHUB_RUN_ID}.txt | cat kube-score-results-${GITHUB_RUN_ID}.txt
-      
+          ./kube-score_1.17.0_linux_amd64 score *.yaml | /usr/bin/tee kube-score-results-${GITHUB_RUN_ID}.txt
+  
       - name: 'Upload kube-score resuts'
         uses: actions/upload-artifact@v3
         with:
