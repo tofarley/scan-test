@@ -26,12 +26,13 @@ jobs:
 
     - run: /usr/bin/curl -sSLO https://github.com/zegl/kube-score/releases/download/v1.17.0/kube-score_1.17.0_linux_amd64
     - run: /usr/bin/chmod +x kube-score_1.17.0_linux_amd64
-    - run: ./kube-score_1.17.0_linux_amd64 score *.yaml | /usr/bin/tee ${GITHUB_WORKSPACE}/kube-score-results-${GITHUB_RUN_ID}.txt
+    - run: ./kube-score_1.17.0_linux_amd64 score *.yaml | /usr/bin/tee ${GITHUB_WORKSPACE}/kube-score-results.txt
+    - run: cat ${GITHUB_WORKSPACE}/kube-score-results.txt
 
     - uses: actions/upload-artifact@v3
       with:
         name: kube-score-results
-        path: ${GITHUB_WORKSPACE}/kube-score-results-${GITHUB_RUN_ID}.txt
+        path: ${GITHUB_WORKSPACE}/kube-score-results.txt
         retention-days: 7
 
 
