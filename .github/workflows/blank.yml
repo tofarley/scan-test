@@ -28,9 +28,12 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Run kube-score
         run: |
+          which set
+          set -o pipefail
           /usr/bin/curl -sSLO https://github.com/zegl/kube-score/releases/download/v1.17.0/kube-score_1.17.0_linux_amd64
           /usr/bin/chmod +x kube-score_1.17.0_linux_amd64
           ./kube-score_1.17.0_linux_amd64 score *.yaml | /usr/bin/tee kube-score-results-${GITHUB_RUN_ID}.txt
+      
       - name: 'Upload kube-score resuts'
         uses: actions/upload-artifact@v3
         with:
