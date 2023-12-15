@@ -2,6 +2,11 @@
 
 name: kube-score
 
+env:
+  KUBESCORE_VERSION: '1.17.0'
+  
+  
+
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the "master" branch
@@ -27,12 +32,12 @@ jobs:
 
     - name: Run kube-score
       run: |
-        /usr/bin/curl -sSLO https://github.com/zegl/kube-score/releases/download/v1.17.0/kube-score_1.17.0_linux_amd64
-        /usr/bin/chmod +x kube-score_1.17.0_linux_amd64
+        /usr/bin/curl -sSLO https://github.com/zegl/kube-score/releases/download/v${KUBESCORE_VERSION}/kube-score_${KUBESCORE_VERSION}_linux_amd64
+        /usr/bin/chmod +x kube-score_${KUBESCORE_VERSION}_linux_amd64
         # The following line will cause the pipeline to fail when there are security findings in the kubernetes manifest files.
         # Uncomment the following line to allow the CI/CD pipeline to succeed even when the scan has findings.
         set -o pipefail
-        ./kube-score_1.17.0_linux_amd64 score *.yaml | /usr/bin/tee ./kube-score-results.txt
+        ./kube-score_${KUBESCORE_VERSION}_linux_amd64 score *.yaml | /usr/bin/tee ./kube-score-results.txt
 
     # Upload artifacts
     - uses: actions/upload-artifact@v3
