@@ -24,15 +24,17 @@ jobs:
     steps:
     # Checkout our project
     - uses: actions/checkout@v3
-    # Upload artifacts
-    - uses: actions/upload-artifact@v3
-      with:
-        name: kube-score-results
-        path: kube-score-results.txt
-        retention-days: 7
+
     - name: kube-score
       run: |
         /usr/bin/curl -sSLO https://github.com/zegl/kube-score/releases/download/v1.17.0/kube-score_1.17.0_linux_amd64
         /usr/bin/chmod +x kube-score_1.17.0_linux_amd64
         ./kube-score_1.17.0_linux_amd64 score *.yaml | /usr/bin/tee ./kube-score-results.txt
         cat ./kube-score-results.txt
+
+    # Upload artifacts
+    - uses: actions/upload-artifact@v3
+      with:
+        name: kube-score-results
+        path: kube-score-results.txt
+        retention-days: 7
