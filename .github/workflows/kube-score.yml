@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: kube-score
 
 # Controls when the workflow will run
 on:
@@ -29,12 +29,14 @@ jobs:
       run: |
         /usr/bin/curl -sSLO https://github.com/zegl/kube-score/releases/download/v1.17.0/kube-score_1.17.0_linux_amd64
         /usr/bin/chmod +x kube-score_1.17.0_linux_amd64
+        # The following line will cause the pipeline to fail when there are security findings in the kubernetes manifest files.
+        # Uncomment the following line to allow the CI/CD pipeline to succeed even when the scan has findings.
         set -o pipefail
         ./kube-score_1.17.0_linux_amd64 score *.yaml | /usr/bin/tee ./kube-score-results.txt
-        cat ./kube-score-results.txt
 
     # Upload artifacts
     - uses: actions/upload-artifact@v3
+      # Upload the findings always, even when there are security findings that cause the scan to fail.
       if: always()
       with:
         name: kube-score-results
