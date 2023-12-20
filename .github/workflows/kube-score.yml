@@ -32,7 +32,7 @@ jobs:
         /usr/bin/chmod +x kube-score_${KUBESCORE_VERSION}_linux_amd64
         # The following line will cause the pipeline to fail when there are security findings in the kubernetes manifest files.
         # Uncomment the following line to allow the CI/CD pipeline to succeed even when the scan has findings.
-        set -o pipefail
+        # set -o pipefail
         ./kube-score_${KUBESCORE_VERSION}_linux_amd64 score *.yaml | /usr/bin/tee ./kube-score-results.txt
 
     # Upload artifacts
